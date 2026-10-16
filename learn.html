@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- OpenFlash | https://github.com/YOUR-USERNAME/openflash | Copyright (c) 2026 [Your Name] | MIT License (see LICENSE) -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Android ROMs explained in plain words – OpenFlash</title>
+<meta name="author" content="[Your Name]">
+<meta name="description" content="What is a ROM, a bootloader, a recovery? A plain-language guide for people who have never flashed a phone.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Android ROMs explained in plain words">
+<meta property="og:description" content="What is a ROM, a bootloader, a recovery? A plain-language guide for people who have never flashed a phone.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=IBM+Plex+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="bar">
+<a class="logo" href="index.html">OpenFlash</a>
+<button id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav id="nav"><a href="index.html#install">Install</a><a href="index.html#guides">Guides</a><a href="learn.html" aria-current="page"><b>Learn</b></a><a href="index.html#about">About</a><a href="index.html#credits">Credits</a></nav>
+</div></header>
+<main id="top">
+
+<section class="hero">
+<h1>Android ROMs, explained in plain words.</h1>
+<p>What is a ROM? What is a bootloader? Why does my phone need a "recovery"? This page explains every word you will meet while installing a ROM, so nothing on the screen is a mystery.</p>
+</section>
+
+<div class="note"><b>The short version.</b> Your phone has an operating system (Android) just like a computer has Windows. A <b>ROM</b> is a different version of that operating system. Installing one means replacing the old system with a new one. Phone makers lock their phones so this is not possible by accident, so a few extra steps are needed: unlock the phone, send it some files from a computer, and let it install them.</div>
+
+<nav class="toc" aria-label="On this page">
+<a href="#pc">1. Phone vs computer</a>
+<a href="#boot">2. What happens at power-on</a>
+<a href="#words">3. Words you will meet</a>
+<a href="#journey">4. The journey, step by step</a>
+<a href="#risks">5. What can go wrong</a>
+<a href="#faq">6. Questions people ask</a>
+</nav>
+
+<section id="pc">
+<h2>1. If you know computers, you already know this</h2>
+<p>Installing a ROM is very close to reinstalling Windows or Linux on a PC. Each part of a phone has a computer twin:</p>
+<div class="scroll"><table class="cmp">
+<thead><tr><th>On a computer</th><th>On a phone</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td>Windows / Linux / macOS</td><td><b>ROM</b> (Android)</td><td>The system you see and use: home screen, apps, settings.</td></tr>
+<tr><td>BIOS / UEFI</td><td><b>Bootloader</b></td><td>The very first program that runs. It decides what to start.</td></tr>
+<tr><td>USB installer / recovery disk</td><td><b>Recovery</b></td><td>A small repair-and-install system that lives next to Android.</td></tr>
+<tr><td>Hard-disk partitions (C:, D:)</td><td><b>Partitions</b></td><td>The phone's storage is divided into separate areas (boot, system, data).</td></tr>
+<tr><td>Drivers</td><td><b>Vendor / firmware</b></td><td>Code made by the manufacturer so the system can talk to the hardware.</td></tr>
+<tr><td>Formatting a disk</td><td><b>Wipe / format data</b></td><td>Erases your files and apps so the new system starts clean.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="boot">
+<h2>2. What happens when you press the power button</h2>
+<p>The bootloader always starts first. From there the phone can go three ways, depending on which buttons you hold. Installing a ROM means using the two side doors (Fastboot and Recovery) to change what is behind the front door (Android).</p>
+<div class="flow" role="img" aria-label="Power on leads to the bootloader, which leads to Android, Recovery or Fastboot mode">
+<div class="fbox top">Power on</div>
+<div class="farrow">↓</div>
+<div class="fbox main">Bootloader<small>the first program, always runs first</small></div>
+<div class="farrow">↓</div>
+<div class="fthree">
+<div class="fbox">Android<small>your ROM, the normal way in</small></div>
+<div class="fbox hl">Recovery<small>repair and install</small></div>
+<div class="fbox hl">Fastboot mode<small>talks to a computer</small></div>
+</div>
+</div>
+<p class="small">Which buttons open which mode is different for every phone. The installer shows the right ones for the phone you choose.</p>
+</section>
+
+<section id="words">
+<h2>3. Words you will meet</h2>
+<p>Tap a word to read what it means. Each one also says where it shows up in the installer.</p>
+
+<h3>The basics</h3>
+<details><summary>ROM</summary><p>The operating system file you install. It contains Android plus the changes the ROM's authors made: how it looks, extra features, privacy settings and so on. The name comes from "read-only memory", which is a historical leftover. Today it simply means "a version of Android you can install".</p></details>
+<details><summary>Stock ROM vs custom ROM</summary><p><b>Stock</b> is what the phone shipped with from the maker (Google's Android on a Pixel, MIUI on a Xiaomi). A <b>custom ROM</b> is made by someone else, such as LineageOS or Pixel Experience. People install them to get newer Android on an old phone, remove bloatware or gain more control.</p></details>
+<details><summary>Official vs community build</summary><p>An <b>official</b> build is released by the ROM's own project and tested by them. A <b>community</b> (or unofficial) build is made by one person, often as a hobby. It can be great, but the risk is higher, which is why the installer labels every ROM with one of these two tags.</p></details>
+<details><summary>Flash / flashing</summary><p>Writing a file directly into one of the phone's storage areas. "Flash a recovery" means "write the recovery file into the phone".</p></details>
+<details><summary>GApps (Google apps)</summary><p>Google Play, Gmail, Maps and the other Google apps. Some ROMs already include them and some do not, so you add them yourself in a separate step. The page of each ROM says which case it is.</p></details>
+
+<h3>Locking and unlocking</h3>
+<details><summary>Bootloader</summary><p>The first small program that runs when you press power. Its job is to check the system and start it. Because it can start <i>anything</i>, phone makers lock it so only their own software is allowed. Installing a custom ROM needs it unlocked.</p></details>
+<details><summary>Locked and unlocked bootloader</summary><p>A <b>locked</b> bootloader refuses to accept any file that is not signed by the maker. An <b>unlocked</b> one accepts files from you. Unlocking is a deliberate step you request, and it <b>erases all data on the phone</b> on purpose, so nobody can unlock a stolen phone and read its owner's files. Some makers, like Xiaomi, make you create an account and wait a while before unlocking is allowed. Unlocking can void the warranty, and a few banking or payment apps may refuse to run on an unlocked phone.</p></details>
+<details><summary>OEM unlocking</summary><p>A switch in the phone's Developer options that says "I am allowed to unlock the bootloader". It must be on before unlocking works.</p></details>
+
+<h3>The special modes</h3>
+<details><summary>Fastboot (bootloader mode)</summary><p>A mode where the phone shows a plain screen (often the word "FASTBOOT") and waits for a computer to send it files. This is where the installer writes the recovery. Because it belongs to the bootloader, it works even when Android is broken.</p></details>
+<details><summary>Fastbootd</summary><p>A second, newer kind of fastboot that runs from inside recovery instead of the bootloader. Modern phones keep several partitions inside one big container (see "Dynamic partitions"), and only fastbootd can write into that container. Some ROMs need it.</p></details>
+<details><summary>Recovery</summary><p>A tiny separate system whose only job is maintenance. From here you can erase data (factory reset), install a ROM and repair problems. It is the "installer disk" of your phone. It still works when Android will not start. Popular recoveries are TWRP, OrangeFox, Lineage Recovery and the recovery of Pixel Experience.</p></details>
+<details><summary>Sideload and ADB</summary><p><b>ADB</b> (Android Debug Bridge) is a way for a computer to talk to a phone over USB. <b>Sideload</b> is one thing it can do: send a ROM file from the computer to a phone that is waiting in recovery. You choose "Apply update, then Apply from ADB" on the phone, and the installer sends the file. OpenFlash does this directly from the browser, so you do not need ADB installed.</p></details>
+<details><summary>USB debugging</summary><p>A setting in Developer options that lets a computer control the phone while Android is running. You often need it before unlocking, but not once you are in recovery.</p></details>
+<details><summary>WebUSB</summary><p>A browser feature (in Chrome and Edge) that lets a web page talk to a USB device after you give permission. This is why OpenFlash can install a ROM without any program. The browser shows a window asking you to pick your phone, and it will not talk to anything you did not choose.</p></details>
+
+<h3>Inside the phone</h3>
+<details><summary>Partition</summary><p>Phone storage is split into separate areas with different jobs: <code>boot</code> (starts the system), <code>system</code> (Android itself), <code>vendor</code> (hardware code), <code>recovery</code> and <code>data</code> (your apps and files). Flashing means writing into one of them.</p></details>
+<details><summary>Slots (A/B)</summary><p>Many newer phones, including the Pixel 4, keep two copies of the system: slot <b>A</b> and slot <b>B</b>. An update is written to the one you are not using and the phone switches over when it is done. If the update fails, the old copy still works. That is why the recovery of such a phone shows "Active slot: a" or "b".</p></details>
+<details><summary>Dynamic partitions / super</summary><p>On newer Android the <code>system</code>, <code>vendor</code> and <code>product</code> areas are not separate. They live as flexible "logical" partitions inside one large partition called <code>super</code>, which can be resized. Some ROMs for older phones use a version of this too.</p></details>
+<details><summary>Kernel</summary><p>The core of the system that talks to the hardware. A recovery and a ROM often need to use the <b>same kernel version</b>, otherwise the recovery cannot properly install that ROM.</p></details>
+<details><summary>boot.img and dtbo.img</summary><p><code>boot.img</code> holds the kernel and the first files used at start. On some phones, like the Pixel 4, the recovery is stored inside it. <code>dtbo.img</code> is a small file that describes the phone's hardware to the kernel. Installers flash both so the new system matches the phone.</p></details>
+<details><summary>Vendor and firmware</summary><p>The manufacturer's hardware-specific code (modem, camera, Wi-Fi). A ROM usually relies on the vendor files already on the phone, which is why some ROMs ask you to be on a certain stock version first.</p></details>
+<details><summary>Wipe / format data</summary><p>Erasing the <code>data</code> partition, which holds your apps, accounts and files. A fresh ROM normally needs a clean data partition, because the old data was made by a different system and can make the new one crash. <b>Make a backup first.</b></p></details>
+
+<h3>Safety and checking</h3>
+<details><summary>Checksum (SHA-256)</summary><p>A 64-character "fingerprint" of a file. If your copy gives the same fingerprint as the one the author published, the file is exactly the right one and nothing was damaged in the download. The installer can check it for you, and the Guides explain how to get it yourself.</p></details>
+<details><summary>Codename</summary><p>The short internal name of a phone model, like <code>flame</code> for the Pixel 4 or <code>clover</code> for the Mi Pad 4. Files are built for one codename and must never be flashed on another. The installer reads the phone's codename and stops if it does not match.</p></details>
+<details><summary>Brick, soft brick, bootloop</summary><p>"Bricked" means the phone no longer works. A <b>soft brick</b> (stuck on the logo, or restarting again and again, which is a <b>bootloop</b>) is common and fixable: you go back to recovery or fastboot and install again. A <b>hard brick</b> (no screen, no sign of life) is rare and usually comes from writing wrong files into the bootloader area. See section 5.</p></details>
+<details><summary>Root</summary><p>Giving apps full "administrator" power over the system. It is a separate topic from installing a ROM, you do not need it, and it can break some apps. OpenFlash does not do it.</p></details>
+<details><summary>OTA update</summary><p>"Over the air": the normal system update from Settings. Some custom ROMs keep their own updater, others are updated by sideloading a newer file.</p></details>
+</section>
+
+<section id="journey">
+<h2>4. The journey, step by step</h2>
+<p>These are the stages of almost every ROM install, and what is really happening in each one.</p>
+<ol class="journey">
+<li><b>Back up your things.</b> <span>Everything on the phone will be erased. Copy photos, chats and files somewhere safe now.</span></li>
+<li><b>Unlock the bootloader.</b> <span>You tell the phone's maker you accept the risk. The phone erases itself as part of this. It is done once.</span></li>
+<li><b>Get the right files.</b> <span>Download the ROM and any helper files (recovery, boot, dtbo) for your exact model. Check their SHA-256 so you know they are genuine and complete.</span></li>
+<li><b>Start the phone in Fastboot mode.</b> <span>Hold the right buttons while powering on. The phone now waits for a computer.</span></li>
+<li><b>Connect from the browser and flash the recovery.</b> <span>The installer checks the phone's codename, then writes the helper files and the recovery into the phone.</span></li>
+<li><b>Boot into recovery.</b> <span>The phone starts the small maintenance system you just installed. You now see its menu.</span></li>
+<li><b>Format data.</b> <span>In recovery you choose Factory reset or Format data. This clears space for the new system.</span></li>
+<li><b>Send the ROM (sideload).</b> <span>You choose Apply from ADB on the phone, and the installer sends the ROM file over USB. The phone checks its signature and installs it. Do not unplug the cable.</span></li>
+<li><b>Reboot and wait.</b> <span>Choose Reboot system. The first start can take several minutes. Then you see the welcome screen of your new Android.</span></li>
+</ol>
+</section>
+
+<section id="risks">
+<h2>5. What can go wrong, and how worried to be</h2>
+<p>Most problems are small and fixable. Here are the common ones in plain order, from harmless to serious.</p>
+<div class="scroll"><table class="cmp">
+<thead><tr><th>What you see</th><th>What it means</th><th>How bad is it?</th></tr></thead>
+<tbody>
+<tr><td>The installer shows an error before flashing</td><td>Wrong file, wrong phone, cable problem or another program using the phone.</td><td><b>Harmless.</b> Nothing was changed. Fix the cause and try again.</td></tr>
+<tr><td>Phone stays on the Fastboot screen</td><td>The recovery did not start. Often a missing file or a wrong button combination.</td><td><b>Easy.</b> Pick Recovery mode from the menu or flash again.</td></tr>
+<tr><td>Recovery says "Signature verification failed"</td><td>The ROM file is damaged or not the official one.</td><td><b>Easy.</b> Say No, check the checksum and download again.</td></tr>
+<tr><td>Stuck on the logo, or restarts again and again (bootloop)</td><td>The system installed but cannot start, usually because data was not wiped or the base version is wrong.</td><td><b>Fixable.</b> Go to recovery, format data and install again.</td></tr>
+<tr><td>Phone will not enter any mode</td><td>Rare. The system and recovery are both damaged.</td><td><b>Serious but usually recoverable.</b> Use the maker's own repair tool or restore tool.</td></tr>
+<tr><td>Phone is completely dead</td><td>Hard brick. Almost always from flashing a file made for a different phone into the bootloader area.</td><td><b>Rare.</b> This is why files are always checked against the phone's codename.</td></tr>
+</tbody></table></div>
+<p class="small">Honest note: no tool can promise zero risk. What lowers it is simple: the right files, a full battery, a good cable, and not unplugging while data is moving. If the page shows a red error, read it, it explains what to do next.</p>
+</section>
+
+<section id="faq">
+<h2>6. Questions people ask</h2>
+<details><summary>Will I lose my data?</summary><p>Yes. Unlocking the bootloader erases the phone, and installing a ROM erases it again. Everything you want to keep must be copied somewhere else first. After the install, apps and files do not come back on their own.</p></details>
+<details><summary>Can I go back to the original system?</summary><p>Usually yes. Most makers publish their original software ("factory images" or "fastboot ROMs"), and you can flash it again. That also erases the phone. Pixels even have an official web tool for this (see the Guides).</p></details>
+<details><summary>Is it legal? Does it void the warranty?</summary><p>In most countries you may change the software on a device you own. Warranty is a different matter: unlocking the bootloader can void it with some makers. Check your maker's terms before you start.</p></details>
+<details><summary>Why can I not just do it from the phone?</summary><p>The phone's own Android cannot replace itself while it is running, and the bootloader's special modes only talk over USB. That is why you need a computer. Here it is the browser, so nothing needs to be installed.</p></details>
+<details><summary>Why is the first start so slow?</summary><p>The new system has to set everything up from scratch: it builds its caches and prepares every app. Give it up to 10 minutes. That is normal.</p></details>
+<details><summary>Why do the steps differ between phones?</summary><p>Phones are built differently. Some keep their recovery inside the boot file, some have two system slots, some need a Mi account to unlock. Each ROM's own instructions say which applies, and the installer follows them for each supported phone.</p></details>
+<details><summary>My banking app does not work after installing a ROM.</summary><p>Some apps check whether the phone is "certified" and refuse to run if the bootloader is unlocked or the system is not the original. That depends on the ROM and the app, and it is up to the ROM's authors whether it can be solved.</p></details>
+</section>
+
+<div class="cta">
+<h2>Ready to try?</h2>
+<p>Choose your phone, then the ROM, and follow the steps. You can come back to this page at any time.</p>
+<a class="btn" href="index.html#install" style="text-decoration:none;display:inline-block">Open the installer</a>
+</div>
+
+</main>
+<footer>© 2026 [Your Name] · <a href="https://github.com/YOUR-USERNAME/openflash/blob/main/LICENSE">MIT License</a> · <a href="https://github.com/YOUR-USERNAME/openflash">Source on GitHub</a> · not affiliated with Google, Xiaomi or any ROM project</footer>
+<script>
+(function(){var b=document.getElementById("burger"),n=document.getElementById("nav");
+b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o?"true":"false");});})();
+</script>
+</body>
+</html>
