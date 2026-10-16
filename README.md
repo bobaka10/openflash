@@ -49,7 +49,7 @@ There is no server and no analytics. Your files are read in your browser only. T
 ## License and credit
 OpenFlash is released under the [MIT License](LICENSE). You are free to use, copy and modify it, but you must **keep the copyright notice and the license text** in copies and substantial parts of it. If you build on OpenFlash, a link back to this project is appreciated.
 
-Copyright (c) 2026 [Your Name].
+Copyright (c) 2026 @bobaka10.
 
 Built on [fastboot.js](https://github.com/kdrag0n/fastboot.js) and inspired by [android-webinstall](https://github.com/kdrag0n/android-webinstall), both by Danny Lin (kdrag0n). See [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).
 
