@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- OpenFlash | https://github.com/bobaka10/openflash | Copyright (c) 2026 @bobaka10 | MIT License (see LICENSE) -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<script src="theme.js"></script>
+<title>OpenFlash – install Android ROMs from your browser</title>
+<meta name="author" content="@bobaka10">
+<meta name="description" content="Pick your phone, pick a ROM, follow the steps. Works from Chrome or Edge. Tested on Google Pixel 4 and Xiaomi Mi Pad 4.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="OpenFlash: install a custom Android ROM from your browser">
+<meta property="og:description" content="Pick your phone, pick a ROM, follow the steps. Works from Chrome or Edge. Tested on Google Pixel 4 and Xiaomi Mi Pad 4.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=IBM+Plex+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="bar">
+<a class="logo" href="#top">OpenFlash</a>
+<button id="theme-toggle" class="themebtn" type="button" aria-label="Switch theme"></button>
+<button id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav id="nav"><a href="#install">Install</a><a href="unlock.html">Unlock</a><a href="#guides">Guides</a><a href="learn.html">Learn</a><a href="#about">About</a><a href="#credits">Credits</a></nav>
+</div></header>
+<main id="top">
+<section class="hero">
+<h1>Install a custom Android ROM from your browser.</h1>
+<p>Pick your phone, pick a ROM, follow the steps. No command line and usually no extra software. Official and community ROMs are both supported, and each one is clearly labeled. Open source, and anyone can add a device on GitHub.</p>
+<p class="newhere">New to this? <a href="learn.html"><b>Read what a ROM, a bootloader and a recovery are, in plain words.</b></a></p>
+</section>
+
+<section id="install" aria-label="Installer">
+<div class="demo"><b>Works today:</b> Google Pixel 4 with LineageOS, HeckerOS and Evolution X, Google Pixel 6a with Evolution X and LineageOS, and Xiaomi Mi Pad 4 with PixelExperience Plus. All were installed end to end on real devices, from Chrome on a computer. Everything in the installer writes to your phone for real, and flashing erases it, so use it at your own risk. Needs Chrome or Edge over https or localhost.</div>
+<div class="wiz">
+<ol class="steps" id="steps"></ol>
+<div id="stage"></div>
+</div>
+</section>
+
+<section id="status">
+<h2>What works today</h2>
+<div class="scroll"><table class="cmp">
+<thead><tr><th>Phone</th><th>ROM</th><th>Status</th><th>Tested with</th></tr></thead>
+<tbody>
+<tr><td>Google Pixel 4 (flame)</td><td>LineageOS 24.0</td><td><b>Works</b></td><td>build 20261015</td></tr>
+<tr><td>Google Pixel 4 (flame)</td><td>HeckerOS 1.0 (Android 17)</td><td><b>Works</b></td><td>build 20261026</td></tr>
+<tr><td>Google Pixel 4 (flame)</td><td>Evolution X, Android 17 (unofficial)</td><td><b>Works</b></td><td>Android 17 build from the ROM thread</td></tr>
+<tr><td>Google Pixel 6a (bluejay)</td><td>Evolution X 11.11 (Android 16, official)</td><td><b>Works</b></td><td>build 20260915</td></tr>
+<tr><td>Google Pixel 6a (bluejay)</td><td>LineageOS (official)</td><td><b>Works</b></td><td>official build from the LineageOS site</td></tr>
+<tr><td>Xiaomi Mi Pad 4 (clover)</td><td>PixelExperience Plus 13</td><td><b>Works</b></td><td>build 20240126</td></tr>
+<tr><td>Xiaomi Mi Pad 4 Plus (clover)</td><td>PixelExperience Plus 13</td><td>Untested, same codename</td><td></td></tr>
+</tbody></table></div>
+<p class="small">Help us test more phones: see <a href="https://github.com/bobaka10/openflash#readme">the README</a>.</p>
+</section>
+
+<section id="guides">
+<h2>Guides</h2>
+<details><summary>How to unlock the bootloader</summary>
+<p>The <a href="unlock.html"><b>Unlock page</b></a> has step-by-step instructions for each device (Pixel 4, Pixel 6a, Mi Pad 4) and can check the status and run the unlock for the Pixels from your browser. In short, for a Pixel:</p>
+<ol class="cmds"><li>Settings → About phone → tap <i>Build number</i> 7 times.</li><li>Settings → System → Developer options → turn on <i>OEM unlocking</i>.</li><li>Power off, then hold Power + Volume Down to open the bootloader, and connect the cable.</li><li>Run <code>fastboot flashing unlock</code> (or use the Unlock page) and confirm on the phone with the Volume keys and Power. This erases all data.</li></ol>
+<p>Carrier-locked models (for example Verizon) usually cannot be unlocked. Check before you start. Xiaomi tablets use Xiaomi's Mi Unlock tool instead, see the Unlock page.</p></details>
+<details><summary>Brick and data-loss warning</summary>
+<p>Flashing erases your phone and can make it unusable if it is interrupted or the wrong file is used. Back up your photos and files first, charge to at least 50%, use a good USB cable, and do not unplug during the process. You do this at your own risk.</p></details>
+<details><summary>Official vs community builds</summary>
+<p>Official builds are published by the ROM project itself for your exact device. Community builds are made by independent developers, often for devices the project does not support. They can be great, but they are harder to verify and less tested. Check who made the build and read its thread before installing.</p></details>
+<details><summary>How your files are checked</summary>
+<p>Before flashing, OpenFlash checks that each file has the right type, is not suspiciously small, starts with the right internal signature, and has your device codename in its name. If the download page shows a SHA-256 checksum, you can paste it and the file is compared exactly. Many builds do not publish one, so this is optional. Files never leave your computer. To get the checksum of a file on your computer, see <a href="#guide-sha">How to check a SHA-256 checksum</a>.</p></details>
+<details id="guide-clover"><summary>Xiaomi Mi Pad 4 tips</summary>
+<ul class="cmds">
+<li><b>Boot modes.</b> Fastboot: hold Power + Volume Down until the word FASTBOOT appears. Recovery: hold Power + Volume Up, and when the Mi logo shows release Power but keep holding Volume Up until the menu appears.</li>
+<li><b>Do not start Android between flashing the recovery and opening it for the first time.</b> The original Android can replace the new recovery. That is why the installer does not restart the tablet by itself: you open the recovery by hand.</li>
+<li><b>Only the PE recovery works with this ROM.</b> TWRP and OrangeFox cannot install it. To switch to another ROM later, first format data in the PE recovery, then flash the other recovery.</li>
+<li><b>Messages about "metadata" or "libfs_mgr"</b> during the first install are normal. Ignore them.</li>
+<li><b>No computer cable handy?</b> You can also copy the ROM zip to a FAT32/exFAT/NTFS SD card or an OTG USB stick and choose it in the PE recovery menu.</li>
+<li><b>Wi-Fi, Bluetooth or sensors not working after the install?</b> The persist partition of this tablet is known to be fragile and can get damaged. The XDA thread of the ROM explains how to restore it.</li>
+<li><b>The tablet shows "Press any key to shutdown" when you connect it in fastboot.</b> This is a known problem with USB 3.x ports on Windows. First try a USB 2.0 port (at the back of a desktop, black ones) or put a cheap USB 2.0 hub between the computer and the tablet. Replug the cable after switching the tablet off and on.</li>
+<li><b>The tablet shows up as "Android" with a yellow triangle in Windows.</b> Open Device Manager, right-click it, choose <i>Update driver → Browse my computer → Let me pick from a list → Android Device → Android Bootloader Interface</i>. Windows already includes this driver.</li>
+<li><b>Last resort for the shutdown message (advanced, Windows only).</b> A community workaround changes some USB settings. Open PowerShell as Administrator and run the three lines, then replug the tablet:
+<pre class="code">reg add "HKLM\SYSTEM\CurrentControlSet\Control\usbflags\18D1D00D0100" /v osvc /t REG_BINARY /d 0000 /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\usbflags\18D1D00D0100" /v SkipContainerIdQuery /t REG_BINARY /d 01000000 /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\usbflags\18D1D00D0100" /v SkipBOSDescriptorQuery /t REG_BINARY /d 01000000 /f</pre>
+To undo it: <code>reg delete "HKLM\SYSTEM\CurrentControlSet\Control\usbflags\18D1D00D0100" /f</code></li>
+</ul></details>
+
+<details id="guide-sha"><summary>How to check a SHA-256 checksum (Windows, macOS, Linux)</summary>
+<p>A SHA-256 checksum is a 64-character fingerprint of a file. If your downloaded file gives the same fingerprint as the one on the official download page, it is exactly the right file and was not damaged on the way. LineageOS shows the checksum next to each build on its download page.</p>
+<p><b>Windows</b> (Command Prompt or PowerShell):</p>
+<ol class="cmds"><li>Open the Start menu, type <code>cmd</code> and press Enter.</li><li>Type <code>certutil -hashfile </code> (with a space at the end), drag the downloaded file into the window so its path appears, then type <code> SHA256</code> and press Enter.</li></ol>
+<pre class="code">certutil -hashfile "D:\Downloads\lineage-24.0-20261015-nightly-flame-signed.zip" SHA256</pre>
+<p>The long line of letters and numbers under the file name is the checksum. PowerShell users can run <code>Get-FileHash "path\to\file.zip" -Algorithm SHA256</code> instead. Large files take a few seconds to a minute.</p>
+<p><b>macOS</b> (Terminal):</p>
+<pre class="code">shasum -a 256 ~/Downloads/lineage-24.0-20261015-nightly-flame-signed.zip</pre>
+<p><b>Linux</b> (Terminal):</p>
+<pre class="code">sha256sum ~/Downloads/lineage-24.0-20261015-nightly-flame-signed.zip</pre>
+<p><b>Compare it.</b> Capital or small letters do not matter, and spaces inside the number are ignored. Every other character must match exactly. You can also paste the official checksum into the box under the file in the installer and press <i>Verify file</i>. The page compares it for you.</p>
+<p><b>It does not match?</b> Delete the file, download it again from the official page (not from a mirror or a forum), and check again. If it still does not match, do not flash it.</p></details>
+
+<details id="guide-wrong"><summary>Something went wrong during install: what to do</summary>
+<p><b>First, stay calm.</b> The steps this page does (flash dtbo and boot, then sideload the ROM) never touch the bootloader, so you can almost always start over. The page also explains the error in the log box in plain words. Read it before you do anything else, and do not unplug the phone while data is being sent unless the log tells you to.</p>
+<ul class="cmds">
+<li><b>The phone does not show up in the USB list.</b> Use a data cable (some only charge) in a port directly on the computer. Check that the phone shows the bootloader screen (or recovery with <i>Apply from ADB</i> selected). On Windows install Google's USB driver if the phone appears as an unknown device. Then try again.</li>
+<li><b>"Another program is using the phone".</b> Open Command Prompt and run <code>adb kill-server</code>. Close Android Studio and any other tab with this page. Replug the cable and try again.</li>
+<li><b>The phone stays on the fastboot screen after flashing.</b> Press Volume Up or Down until <i>Recovery mode</i> is shown and press Power. If it comes back to fastboot again, run step 1 again.</li>
+<li><b>Recovery says "Signature verification failed".</b> Choose <b>No</b>. The ZIP is damaged or not official. Check its checksum (see the guide above) and download it again.</li>
+<li><b>Recovery says "Install completed with status 1" or "2", or "Installation aborted".</b> Usually a damaged file or the wrong stock firmware (this ROM needs Android 13). Choose <i>Advanced → Reboot to recovery</i>, then <i>Apply update → Apply from ADB</i> and sideload again. <i>Advanced → View recovery logs</i> shows the details.</li>
+<li><b>"To install additional packages, you need to reboot recovery first".</b> This is normal after a successful install. Choose <b>No</b>, then <i>Reboot system now</i>.</li>
+<li><b>The first start takes very long.</b> The first boot after install can take 5 to 10 minutes. Do not unplug or restart before then.</li>
+<li><b>The phone is stuck on a logo, restarts again and again, or says it cannot find a valid operating system.</b> Hold Power + Volume Down for the bootloader, open <i>Recovery mode</i>, choose <i>Factory reset → Format data</i> and sideload the ROM again.</li>
+<li><b>Nothing responds and the screen is black.</b> Hold Power for 20 to 30 seconds. Then hold Power + Volume Down to reach the bootloader.</li>
+</ul>
+<p><b>Go back to the original Android.</b> Google's official <a href="https://flash.android.com" target="_blank" rel="noopener">Android Flash Tool</a> restores a Pixel to factory software from the browser. Factory images are also listed on <a href="https://developers.google.com/android/images" target="_blank" rel="noopener">developers.google.com/android/images</a>. This erases the phone.</p></details>
+
+<details id="guide-ok"><summary>What a successful install looks like</summary>
+<ol class="cmds"><li>The log shows each step finishing, and the progress bar fills to 100% for dtbo, boot and the ROM.</li><li>On the phone, recovery shows <i>Update package verification ... (result 0)</i>, then <i>Step 1/2</i>, <i>Step 2/2</i> and <i>Install completed with status 0</i>.</li><li>It may ask <i>To install additional packages, you need to reboot recovery first</i>. Choose <b>No</b>.</li><li>Choose <i>Reboot system now</i>. The LineageOS logo appears and the first start takes several minutes. Then the setup screen shows up.</li></ol></details>
+
+<details><summary>Browser requirements</summary>
+<p>Use Chrome, Edge or another Chromium browser on a computer. Firefox and Safari do not support WebUSB.</p></details>
+</section>
+
+<section id="about">
+<h2>About</h2>
+<div class="cols">
+<p>OpenFlash is an open-source catalog of Android ROMs with one guided installer for all of them. Existing web installers each support a single ROM. This project puts many ROMs and many devices in one place. Official builds are marked <i>Official</i>. Unofficial builds are allowed too: they are marked <i>Community</i> and show an extra warning before install.</p>
+<p>Devices are described in the <code>DEVICES</code> list in <code>app.js</code>: the files needed, the flashing steps and the warnings. To add a phone or a ROM, open a pull request with a new entry. See <a href="https://github.com/bobaka10/openflash#readme">the README</a>. Moving every device into its own JSON file is planned.</p>
+</div>
+</section>
+
+<section id="credits">
+<h2>Credits</h2>
+<p>Built by <b>@bobaka10</b> for the IT Olympiad. Open source under the MIT license, source on <a href="https://github.com/bobaka10/openflash">GitHub</a>. Copyright © 2026 @bobaka10. If you reuse the code, keep the copyright notice and the license text.</p>
+<p>Built on the work of: the <b>fastboot.js</b> library, <b>android-webinstall</b> by kdrag0n, <b>LineageOS</b>, <b>Evolution X</b>, <b>PixelExperience</b> and <b>HeckerOS</b>. All ROMs belong to their authors and are downloaded from the source shown for each build.</p>
+</section>
+</main>
+<footer>© 2026 @bobaka10 · <a href="https://github.com/bobaka10/openflash/blob/main/LICENSE">MIT License</a> · <a href="https://github.com/bobaka10/openflash">Source on GitHub</a> · not affiliated with Google, Xiaomi or any ROM project</footer>
+
+<script>
+/* Safety net: if app.js did not start, say so instead of showing an empty box. */
+setTimeout(function(){
+  var st=document.getElementById("stage");
+  if(st && !st.children.length){
+    st.innerHTML='<p class="demo"><b>The installer could not start.</b> The page script did not run. Common causes: the web host did not upload every file (app.js, flash.js, adb.js, help.js, fastboot.min.js), the host serves .js files with a wrong type, or the browser is very old. Reload with Ctrl+F5. If it still fails, open the browser console (F12) and look for a red error.</p>';
+  }
+},2500);
+</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>

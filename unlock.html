@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- OpenFlash | https://github.com/bobaka10/openflash | Copyright (c) 2026 @bobaka10 | MIT License (see LICENSE) -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<script src="theme.js"></script>
+<title>Unlock your bootloader – OpenFlash</title>
+<meta name="author" content="@bobaka10">
+<meta name="description" content="Step-by-step bootloader unlocking for the Google Pixel 4, Pixel 6a and Xiaomi Mi Pad 4. Check the lock status and unlock from your browser.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Unlock your Android bootloader">
+<meta property="og:description" content="Step-by-step bootloader unlocking for the Google Pixel 4, Pixel 6a and Xiaomi Mi Pad 4.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=IBM+Plex+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="bar">
+<a class="logo" href="index.html">OpenFlash</a>
+<button id="theme-toggle" class="themebtn" type="button" aria-label="Switch theme"></button>
+<button id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav id="nav"><a href="index.html#install">Install</a><a href="unlock.html" aria-current="page"><b>Unlock</b></a><a href="index.html#guides">Guides</a><a href="learn.html">Learn</a><a href="index.html#about">About</a><a href="index.html#credits">Credits</a></nav>
+</div></header>
+<main id="top">
+
+<section class="hero">
+<h1>Unlock your bootloader.</h1>
+<p>A locked bootloader refuses to install anything the phone's maker did not sign. Unlocking it is the first step of every ROM install. Pick your device, follow the steps, and let this page check and run the unlock for you.</p>
+<p class="small"><b>Status:</b> unlocking from the browser is tested and works on the <b>Pixel 4</b>. The <b>Pixel 6a</b> uses the same command but has not been tested yet. The <b>Mi Pad 4</b> is explained step by step and its status can be checked here, but Xiaomi's own tool does the unlocking.</p>
+</section>
+
+<div class="note"><b>Read this first.</b> Unlocking <b>erases everything</b> on the device: photos, apps, accounts. Make a backup first. It may void the warranty, and a few banking or payment apps can refuse to run afterwards. You do it once per device. New to the words? See <a href="learn.html#words">Learn</a>.</div>
+
+<h2>1. Pick your device</h2>
+<div class="dtabs" role="tablist" aria-label="Device">
+<button class="dtab" role="tab" data-dev="flame">Google Pixel 4</button>
+<button class="dtab" role="tab" data-dev="bluejay">Google Pixel 6a</button>
+<button class="dtab" role="tab" data-dev="clover">Xiaomi Mi Pad 4</button>
+</div>
+
+<!-- ============ Pixel 4 ============ -->
+<section class="devpanel" id="dev-flame" hidden>
+<h2>2. Google Pixel 4 (flame)</h2>
+<p>Google lets you unlock the Pixel with one command, and this page can send it for you. The only requirement is that the phone is not locked to a carrier.</p>
+<ol class="journey">
+<li><b>Turn on Developer options.</b> <span>Settings → About phone → tap <i>Build number</i> 7 times.</span></li>
+<li><b>Turn on OEM unlocking.</b> <span>Settings → System → Developer options → <i>OEM unlocking</i>. If it is greyed out, connect to Wi-Fi, sign in to your Google account and restart. Phones sold by a carrier (for example Verizon) usually cannot be unlocked.</span></li>
+<li><b>Open the bootloader.</b> <span>Switch the phone off, then hold <i>Power + Volume Down</i> until the bootloader screen appears. Connect the USB cable to the computer.</span></li>
+<li><b>Check the status.</b> <span>Click <i>Check status</i> below and choose the phone in the USB window. The page tells you if the phone is locked and if unlocking is allowed.</span></li>
+<li><b>Unlock.</b> <span>Tick the box and click <i>Unlock bootloader</i>. Now look at the phone: use the <i>Volume</i> keys to choose <i>Unlock the bootloader</i> and press <i>Power</i> to confirm.</span></li>
+<li><b>Wait.</b> <span>The phone erases itself and restarts, which can take a few minutes. It may show the bootloader screen or start Android. Both are fine. Go back to the bootloader (Power + Volume Down) and click <i>Check status</i>: it should say <i>unlocked</i>.</span></li>
+<li><b>Install a ROM.</b> <span>Continue on the <a href="index.html#install">Install</a> page.</span></li>
+</ol>
+<div class="tool" data-product="flame" data-unlock="yes">
+<h3>Check and unlock</h3>
+<label class="ack"><input type="checkbox" class="ack-box"> <span>I backed up my data and I understand that unlocking erases everything on this phone.</span></label>
+<div class="row"><button class="btn b-check">Check status</button> <button class="btn b-unlock" disabled>Unlock bootloader</button></div>
+<div class="log" aria-live="polite">Ready. Put the phone in the bootloader (Power + Volume Down) and connect it with a USB cable.</div>
+</div>
+<details><summary>Prefer the terminal? The same commands</summary>
+<pre class="code">adb reboot bootloader
+fastboot flashing get_unlock_ability
+fastboot flashing unlock
+fastboot getvar unlocked</pre>
+<p><code>adb reboot bootloader</code> needs USB debugging, or use Power + Volume Down instead. <code>get_unlock_ability</code> prints 1 when OEM unlocking is on. After <code>flashing unlock</code> confirm on the phone. <code>getvar unlocked</code> should print <code>yes</code> afterwards.</p></details>
+</section>
+
+<!-- ============ Pixel 6a ============ -->
+<section class="devpanel" id="dev-bluejay" hidden>
+<h2>2. Google Pixel 6a (bluejay)</h2>
+<p>Same method as the other Pixels: one command, confirmed on the phone's screen. This page can send it for you. The phone must not be locked to a carrier. <b>Not tested on a locked Pixel 6a yet.</b></p>
+<ol class="journey">
+<li><b>Turn on Developer options.</b> <span>Settings → About phone → tap <i>Build number</i> 7 times.</span></li>
+<li><b>Turn on OEM unlocking.</b> <span>Settings → System → Developer options → <i>OEM unlocking</i>. If it is greyed out, connect to Wi-Fi, sign in to your Google account and restart. Carrier-locked models usually cannot be unlocked.</span></li>
+<li><b>Open the bootloader.</b> <span>Switch the phone off, then hold <i>Power + Volume Down</i> until the bootloader screen appears. Connect the USB cable to the computer.</span></li>
+<li><b>Check the status.</b> <span>Click <i>Check status</i> below and choose the phone in the USB window.</span></li>
+<li><b>Unlock.</b> <span>Tick the box and click <i>Unlock bootloader</i>. On the phone use the <i>Volume</i> keys to choose <i>Unlock the bootloader</i> and press <i>Power</i> to confirm.</span></li>
+<li><b>Wait.</b> <span>The phone erases itself and restarts. Then return to the bootloader (Power + Volume Down) and click <i>Check status</i>: it should say <i>unlocked</i>.</span></li>
+<li><b>Install a ROM.</b> <span>Continue on the <a href="index.html#install">Install</a> page.</span></li>
+</ol>
+<div class="tool" data-product="bluejay" data-unlock="yes">
+<h3>Check and unlock</h3>
+<label class="ack"><input type="checkbox" class="ack-box"> <span>I backed up my data and I understand that unlocking erases everything on this phone.</span></label>
+<div class="row"><button class="btn b-check">Check status</button> <button class="btn b-unlock" disabled>Unlock bootloader</button></div>
+<div class="log" aria-live="polite">Ready. Put the phone in the bootloader (Power + Volume Down) and connect it with a USB cable.</div>
+</div>
+<details><summary>Prefer the terminal? The same commands</summary>
+<pre class="code">adb reboot bootloader
+fastboot flashing get_unlock_ability
+fastboot flashing unlock
+fastboot getvar unlocked</pre>
+<p>Confirm on the phone after <code>flashing unlock</code>. <code>getvar unlocked</code> should print <code>yes</code> afterwards.</p></details>
+</section>
+
+<!-- ============ Mi Pad 4 ============ -->
+<section class="devpanel" id="dev-clover" hidden>
+<h2>2. Xiaomi Mi Pad 4 / 4 Plus (clover)</h2>
+<p>Xiaomi does not allow a one-command unlock. You need a Mi account and Xiaomi's own <b>Mi Unlock</b> tool, which asks Xiaomi's servers for permission. That is why this page cannot unlock the tablet for you, but it can check the result at the end.</p>
+<ol class="journey">
+<li><b>Make a Mi account.</b> <span>Create one at <a href="https://account.xiaomi.com" target="_blank" rel="noopener">account.xiaomi.com</a> and sign in on the tablet.</span></li>
+<li><b>Link the tablet to your account.</b> <span>On the tablet turn on Developer options (tap the MIUI version in About 7 times), then in Developer options turn on <i>OEM unlocking</i> and <i>USB debugging</i> and open <i>Mi Unlock status</i> → <i>Add account and device</i>. Menu names vary a little between MIUI versions.</span></li>
+<li><b>Wait for the timer.</b> <span>Xiaomi makes you wait before it allows the unlock. The time is set per device and is often several days. The Mi Unlock tool shows exactly how long.</span></li>
+<li><b>Get the Mi Unlock tool.</b> <span>Download it from Xiaomi's official page, <a href="https://en.miui.com/unlock/" target="_blank" rel="noopener">en.miui.com/unlock</a>. It runs on Windows. Check that page for Xiaomi's current rules.</span></li>
+<li><b>Open Fastboot mode.</b> <span>Switch the tablet off, then hold <i>Power + Volume Down</i> until the FASTBOOT screen appears. Connect it to the computer. If the tablet shows <i>Press any key to shutdown</i>, see the <a href="index.html#guide-clover">Mi Pad 4 tips</a>.</span></li>
+<li><b>Unlock with the Mi Unlock tool.</b> <span>Sign in with the same Mi account and press <i>Unlock</i>. This erases the tablet.</span></li>
+<li><b>Check the result here.</b> <span>Return to Fastboot mode and click <i>Check status</i> below. Then continue on the <a href="index.html#install">Install</a> page.</span></li>
+</ol>
+<div class="tool" data-product="clover" data-unlock="no">
+<h3>Check status</h3>
+<div class="row"><button class="btn b-check">Check status</button></div>
+<div class="log" aria-live="polite">Ready. Put the tablet in Fastboot mode (Power + Volume Down) and connect it with a USB cable. This only reads information, it does not change anything.</div>
+</div>
+</section>
+
+<div class="cta">
+<h2>Already unlocked?</h2>
+<p>Then you are ready to install a ROM.</p>
+<a class="btn" href="index.html#install" style="text-decoration:none;display:inline-block">Open the installer</a>
+</div>
+
+</main>
+<footer>© 2026 @bobaka10 · <a href="https://github.com/bobaka10/openflash/blob/main/LICENSE">MIT License</a> · <a href="https://github.com/bobaka10/openflash">Source on GitHub</a> · not affiliated with Google, Xiaomi or any ROM project</footer>
+<script>
+/* Safety net: say so if the page script did not start. */
+setTimeout(function(){
+  if(!document.querySelector(".dtab.on")){
+    var m=document.createElement("p");m.className="demo";
+    m.innerHTML="<b>The page script could not start.</b> The step-by-step text above still works, but the buttons need JavaScript modules. Make sure every file was uploaded (unlock.js, flash.js, help.js, fastboot.min.js) and reload with Ctrl+F5.";
+    var t=document.querySelector(".dtabs"); if(t) t.after(m);
+  }
+},2500);
+</script>
+<script type="module" src="unlock.js"></script>
+<script>
+(function(){var b=document.getElementById("burger"),n=document.getElementById("nav");
+b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o?"true":"false");});})();
+</script>
+</body>
+</html>
